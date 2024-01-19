@@ -20,4 +20,6 @@ router.delete(
   certController.deleteCertificate
 );
 
+router.post("/verifyCertificate", certController.verifyCertificate);
+
 module.exports = router;

@@ -107,3 +107,30 @@ exports.deleteCertificate = async (req, res) => {
     });
   }
 };
+
+exports.verifyCertificate = async (req, res) => {
+  try {
+    const { certId, studentId } = req.body; // Assuming certId is extracted from QR code
+
+    const certificate = await Certificate.findOne({ _id: certId, studentId });
+    if (!certificate) {
+      return res.status(404).json({
+        status: "fail",
+        message: "No matching certificate found.",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "The certificate is genuine.",
+      data: {
+        certificate,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};

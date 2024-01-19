@@ -10,17 +10,28 @@ const generateToken = (id) => {
 };
 
 exports.register = async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const user = await User.create({ username, password });
-    const token = generateToken(user._id);
+  const { username, password, role } = req.body;
+  if (
+    role === "admin" &&
+    !process.env.AUTHORIZED_ADMINS.split(",").includes(username)
+  ) {
+    return res.status(403).json({
+      status: "error",
+      message: "Not authorized to register as an admin",
+    });
+  }
 
+  try {
+    const user = await User.create({
+      username,
+      password,
+      role: role || "public",
+    });
+    const token = generateToken(user._id);
     res.status(201).json({
       status: "success",
       token,
-      data: {
-        user,
-      },
+      data: { id: user._id, username: user.username, role: user.role },
     });
   } catch (error) {
     res.status(400).json({

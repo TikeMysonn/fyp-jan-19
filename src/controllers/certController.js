@@ -95,9 +95,10 @@ exports.deleteCertificate = async (req, res) => {
       });
     }
 
-    res.status(204).json({
+    res.status(200).json({
+      // Changed from 204 to 200
       status: "success",
-      data: null,
+      message: "Certificate successfully deleted",
     });
   } catch (error) {
     res.status(400).json({

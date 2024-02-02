@@ -13,7 +13,7 @@ app.use(express.json()); // For parsing application/json
 app.use("/api/users", userRoutes);
 app.use("/api/certs", certRoutes);
 
-// TODO: Connect to MongoDB
+// Connect to MongoDB
 const MONGO_URI = process.env.MONGO_URI;
 mongoose
   .connect(MONGO_URI)

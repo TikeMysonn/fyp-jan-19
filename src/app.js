@@ -1,4 +1,6 @@
 const express = require("express");
+const cors = require("cors");
+
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
 const certRoutes = require("./routes/certRoutes");
@@ -6,6 +8,9 @@ require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Enable CORS for all routes and origins
+app.use(cors());
 
 app.use(express.json()); // For parsing application/json
 

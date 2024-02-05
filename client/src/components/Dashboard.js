@@ -9,6 +9,7 @@ import UserProfile from "./UserProfile";
 function Dashboard() {
   const [activeComponent, setActiveComponent] = useState("verify"); // Default to the verify view
   const [userRole, setUserRole] = useState("public"); // Default role
+  const [username, setUsername] = useState(""); // Add state to store username
 
   useEffect(() => {
     // Retrieve the user's role from local storage safely
@@ -18,6 +19,7 @@ function Dashboard() {
         const user = JSON.parse(storedUser);
         if (user && user.role) {
           setUserRole(user.role);
+          setUsername(user.username); // Set the username
         }
       } catch (e) {
         console.error("Error parsing user from localStorage:", e);
@@ -28,16 +30,17 @@ function Dashboard() {
   const renderComponent = () => {
     switch (
       activeComponent
-      //   case "display":
-      //     return <CertDisplay />;
-      //   case "form":
-      //     return <CertForm />;
-      //   case "list":
-      //     return <CertList />;
-      //   case "verify":
-      //     return <CertVerify />;
-      //   default:
-      //     return <CertList />;
+      // Keep your commented-out cases intact
+      // case "display":
+      //   return <CertDisplay />;
+      // case "form":
+      //   return <CertForm />;
+      // case "list":
+      //   return <CertList />;
+      // case "verify":
+      //   return <CertVerify />;
+      // default:
+      //   return <CertList />;
     ) {
     }
   };
@@ -45,6 +48,14 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto p-6">
+        {username && (
+          <div className="md:col-span-12 text-center mb-4">
+            <h2 className="text-lg font-semibold">
+              Welcome {username}, you are logged in as {userRole.toUpperCase()}{" "}
+              user.
+            </h2>
+          </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           {/* User Profile Column */}
           <div className="md:col-span-3">
@@ -89,11 +100,11 @@ function Dashboard() {
                   </button>
                 )}
               </nav>
-              {/* {renderComponent()} */}
+              {renderComponent()}
             </div>
           </div>
           {/* QR Code Reader Column */}
-          {/* ... */}
+          <div className="md:col-span-3">{/* <QrCodeReader /> */}</div>
         </div>
       </div>
     </div>

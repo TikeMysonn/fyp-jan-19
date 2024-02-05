@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CertDisplay from "./CertDisplay";
 import CertForm from "./CertForm";
 import CertList from "./CertList";
@@ -7,7 +7,23 @@ import QrCodeReader from "./QrCodeReader";
 import UserProfile from "./UserProfile";
 
 function Dashboard() {
-  const [activeComponent, setActiveComponent] = useState("list"); // Default to the list view
+  const [activeComponent, setActiveComponent] = useState("verify"); // Default to the verify view
+  const [userRole, setUserRole] = useState("public"); // Default role
+
+  useEffect(() => {
+    // Retrieve the user's role from local storage safely
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        if (user && user.role) {
+          setUserRole(user.role);
+        }
+      } catch (e) {
+        console.error("Error parsing user from localStorage:", e);
+      }
+    }
+  }, []);
 
   const renderComponent = () => {
     switch (
@@ -31,21 +47,25 @@ function Dashboard() {
       <div className="container mx-auto p-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           {/* User Profile Column */}
-          <div className="md:col-span-3">{/* <UserProfile /> */}</div>
+          <div className="md:col-span-3">
+            <UserProfile />
+          </div>
           {/* Main Content Column */}
           <div className="md:col-span-6">
             <div className="bg-white shadow overflow-hidden sm:rounded-lg p-6">
               <nav className="flex justify-between mb-6">
-                <button
-                  onClick={() => setActiveComponent("form")}
-                  className={`px-4 py-2 rounded-md ${
-                    activeComponent === "form"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200"
-                  } order-first`}
-                >
-                  Add Certificate
-                </button>
+                {userRole === "admin" && (
+                  <button
+                    onClick={() => setActiveComponent("form")}
+                    className={`px-4 py-2 rounded-md ${
+                      activeComponent === "form"
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200"
+                    } order-first`}
+                  >
+                    Add Certificate
+                  </button>
+                )}
                 <button
                   onClick={() => setActiveComponent("verify")}
                   className={`px-4 py-2 rounded-md ${
@@ -56,23 +76,24 @@ function Dashboard() {
                 >
                   Verify Certificate
                 </button>
-                <button
-                  onClick={() => setActiveComponent("list")}
-                  className={`px-4 py-2 rounded-md ${
-                    activeComponent === "list"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200"
-                  } order-last`}
-                >
-                  List Certificates
-                </button>
+                {userRole === "admin" && (
+                  <button
+                    onClick={() => setActiveComponent("list")}
+                    className={`px-4 py-2 rounded-md ${
+                      activeComponent === "list"
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200"
+                    } order-last`}
+                  >
+                    List Certificates
+                  </button>
+                )}
               </nav>
-              {renderComponent()}
+              {/* {renderComponent()} */}
             </div>
           </div>
-
           {/* QR Code Reader Column */}
-          <div className="md:col-span-3">{/* <QrCodeReader /> */}</div>
+          {/* ... */}
         </div>
       </div>
     </div>

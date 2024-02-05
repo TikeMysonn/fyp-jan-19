@@ -21,6 +21,7 @@ function LoginForm() {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem("token", data.token); // Store the token
+        localStorage.setItem("user", JSON.stringify(data.data)); // Store user data
         console.log("Login successful", data);
         // Redirect user to their dashboard or another page
         // Replace '/dashboard' with the path you want to redirect to

@@ -17,6 +17,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import Navbar from "./components/Navbar";
+import RegisterForm from "./components/RegisterForm";
+import Dashboard from "./components/Dashboard";
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           {/* Define other routes here as your app grows */}
         </Routes>
       </div>

@@ -1,7 +1,6 @@
-// Use a QR code library to generate QR codes
-// You can use 'qrcode' or any other library of your choice
+// Use QR code library to generate QR codes
+// Use use 'qrcode' or any other library of your choice
 
-// Example:
 const QRCode = require("qrcode");
 
 const generateQR = async (text) => {

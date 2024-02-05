@@ -14,24 +14,24 @@
 
 //after implementing routing
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import Navbar from "./components/Navbar";
 import RegisterForm from "./components/RegisterForm";
 import Dashboard from "./components/Dashboard";
+import CertForm from "./components/CertForm";
 
 const App = () => {
   return (
     <Router>
-      <div className="App">
-        <Navbar />
-        <Routes>
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          {/* Define other routes here as your app grows */}
-        </Routes>
-      </div>
+      <Navbar />
+      <Routes>
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/certform" element={<CertForm />} />
+        {/* Define other routes here as your app grows */}
+      </Routes>
     </Router>
   );
 };

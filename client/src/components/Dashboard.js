@@ -4,6 +4,7 @@ import CertForm from "./CertForm";
 import CertList from "./CertList";
 import CertVerify from "./CertVerify";
 import QrCodeReader from "./QrCodeReader";
+import { Link } from "react-router-dom";
 import UserProfile from "./UserProfile";
 
 function Dashboard() {
@@ -31,12 +32,12 @@ function Dashboard() {
     switch (
       activeComponent
       // Keep your commented-out cases intact
+      // case "list":
+      //   return <CertList />;
       // case "display":
       //   return <CertDisplay />;
       // case "form":
       //   return <CertForm />;
-      // case "list":
-      //   return <CertList />;
       // case "verify":
       //   return <CertVerify />;
       // default:
@@ -48,14 +49,6 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto p-6">
-        {username && (
-          <div className="md:col-span-12 text-center mb-4">
-            <h2 className="text-lg font-semibold">
-              Welcome {username}, you are logged in as {userRole.toUpperCase()}{" "}
-              user.
-            </h2>
-          </div>
-        )}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           {/* User Profile Column */}
           <div className="md:col-span-3">
@@ -66,45 +59,32 @@ function Dashboard() {
             <div className="bg-white shadow overflow-hidden sm:rounded-lg p-6">
               <nav className="flex justify-between mb-6">
                 {userRole === "admin" && (
-                  <button
-                    onClick={() => setActiveComponent("form")}
-                    className={`px-4 py-2 rounded-md ${
-                      activeComponent === "form"
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-200"
-                    } order-first`}
+                  <Link
+                    to="/certform"
+                    className="px-4 py-2 rounded-md bg-blue-600 text-white order-first"
                   >
                     Add Certificate
-                  </button>
+                  </Link>
                 )}
                 <button
                   onClick={() => setActiveComponent("verify")}
-                  className={`px-4 py-2 rounded-md ${
-                    activeComponent === "verify"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200"
-                  } order-2`}
+                  className="px-4 py-2 rounded-md bg-blue-600 text-white order-2"
                 >
                   Verify Certificate
                 </button>
                 {userRole === "admin" && (
                   <button
                     onClick={() => setActiveComponent("list")}
-                    className={`px-4 py-2 rounded-md ${
-                      activeComponent === "list"
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-200"
-                    } order-last`}
+                    className="px-4 py-2 rounded-md bg-blue-600 text-white order-last"
                   >
                     List Certificates
                   </button>
                 )}
               </nav>
-              {renderComponent()}
+              {/* Optional: Render component based on activeComponent */}
             </div>
           </div>
-          {/* QR Code Reader Column */}
-          <div className="md:col-span-3">{/* <QrCodeReader /> */}</div>
+          {/* Optional: QR Code Reader Column */}
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ function CertForm() {
     issueYear: "",
   });
   const [message, setMessage] = useState("");
+  const [qrCode, setQrCode] = useState(""); // State to hold the QR code data URL
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,11 +37,22 @@ function CertForm() {
       );
       setMessage("Certificate registered successfully!");
       console.log(response.data);
+      setQrCode(response.data.data.qrCode); // Set the QR code data URL
     } catch (error) {
       setMessage(
         error.response?.data?.message || "Failed to register certificate."
       );
     }
+  };
+
+  // Function to download QR code
+  const downloadQrCode = () => {
+    const link = document.createElement("a");
+    link.href = qrCode;
+    link.download = `QRCode-${certData.studentId}.png`; // Name the download file
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -62,6 +74,19 @@ function CertForm() {
               }`}
             >
               {message}
+            </div>
+          )}
+
+          {/* qr code here */}
+          {qrCode && (
+            <div className="text-center">
+              <img src={qrCode} alt="QR Code" className="mx-auto mb-4" />
+              <button
+                onClick={downloadQrCode}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Download QR Code
+              </button>
             </div>
           )}
         </div>

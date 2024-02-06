@@ -11,7 +11,8 @@ exports.createCertificate = async (req, res) => {
     if (existingCertificate) {
       return res.status(409).json({
         status: "fail",
-        message: "Certificate for the given student ID already exists",
+        message:
+          "Certificate for the given student ID already exists. Please check if this is a duplicate, if not, make minor adjustments to the student ID and then proceed. ",
       });
     }
 

@@ -56,9 +56,17 @@ exports.login = async (req, res) => {
 
     // If everything is ok, send token to client
     const token = generateToken(user._id);
+    // Remove password from the user object before sending it back
+    user.password = undefined;
+
     res.status(200).json({
       status: "success",
       token,
+      data: {
+        id: user._id,
+        username: user.username,
+        role: user.role,
+      },
     });
   } catch (error) {
     res.status(400).json({

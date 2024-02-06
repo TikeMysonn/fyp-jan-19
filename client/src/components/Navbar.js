@@ -23,7 +23,7 @@ const Navbar = () => {
         </li>
         <li>
           <Link to="/dashboard" className="hover:text-gray-300">
-            Dashboard
+            ECVS
           </Link>
         </li>
       </ul>

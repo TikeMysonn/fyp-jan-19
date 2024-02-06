@@ -57,6 +57,9 @@ function Dashboard() {
           {/* Main Content Column */}
           <div className="md:col-span-6">
             <div className="bg-white shadow overflow-hidden sm:rounded-lg p-6">
+              <h1 className="text-xl font-semibold text-center mb-6">
+                Education Certificate Verifier System (ECVS)
+              </h1>
               <nav className="flex justify-between mb-6">
                 {userRole === "admin" && (
                   <Link

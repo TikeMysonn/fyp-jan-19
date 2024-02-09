@@ -3,8 +3,15 @@ const QRCode = require("../utils/qrGenerator");
 
 exports.createCertificate = async (req, res) => {
   try {
-    const { certType, courseName, grade, studentName, studentId, issueYear } =
-      req.body;
+    const {
+      certType,
+      courseName,
+      grade,
+      studentName,
+      studentId,
+      issueYear,
+      uniName,
+    } = req.body;
 
     // Check if a certificate for the given studentId already exists
     const existingCertificate = await Certificate.findOne({ studentId });
@@ -24,6 +31,7 @@ exports.createCertificate = async (req, res) => {
       studentName,
       studentId,
       issueYear,
+      uniName,
     });
 
     // Generate QR code
@@ -46,13 +54,19 @@ exports.createCertificate = async (req, res) => {
 
 exports.getAllCertificates = async (req, res) => {
   try {
-    const certificates = await Certificate.find();
+    let certificates = await Certificate.find();
+    // Generate QR codes for all certificates
+    certificates = await Promise.all(
+      certificates.map(async (cert) => {
+        const qrCode = await QRCode.generateQR(cert._id.toString());
+        return { ...cert.toObject(), qrCode }; // Spread the certificate object and append the qrCode
+      })
+    );
+
     res.status(200).json({
       status: "success",
       results: certificates.length,
-      data: {
-        certificates,
-      },
+      data: { certificates },
     });
   } catch (error) {
     res.status(400).json({
@@ -72,10 +86,13 @@ exports.getCertificate = async (req, res) => {
       });
     }
 
+    // Generate QR code for the found certificate
+    const qrCode = await QRCode.generateQR(certificate._id.toString());
+
     res.status(200).json({
       status: "success",
       data: {
-        certificate,
+        certificate: { ...certificate.toObject(), qrCode }, // Spread the certificate object and append the qrCode
       },
     });
   } catch (error) {

@@ -4,6 +4,7 @@ const certificateSchema = new mongoose.Schema({
   certType: String,
   courseName: String,
   grade: String,
+  uniName: String,
   studentName: String,
   studentId: { type: String, unique: true },
   issueYear: Number,

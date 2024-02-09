@@ -20,6 +20,7 @@ import Navbar from "./components/Navbar";
 import RegisterForm from "./components/RegisterForm";
 import Dashboard from "./components/Dashboard";
 import CertForm from "./components/CertForm";
+import CertList from "./components/CertList";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/certform" element={<CertForm />} />
+        <Route path="/certlist" element={<CertList />} />
         {/* Define other routes here as your app grows */}
       </Routes>
     </Router>

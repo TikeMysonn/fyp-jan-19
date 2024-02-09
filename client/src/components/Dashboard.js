@@ -76,12 +76,13 @@ function Dashboard() {
                   Verify Certificate
                 </button>
                 {userRole === "admin" && (
-                  <button
+                  <Link
+                    to="/certlist"
                     onClick={() => setActiveComponent("list")}
                     className="px-4 py-2 rounded-md bg-blue-600 text-white order-last"
                   >
                     List Certificates
-                  </button>
+                  </Link>
                 )}
               </nav>
               {/* Optional: Render component based on activeComponent */}

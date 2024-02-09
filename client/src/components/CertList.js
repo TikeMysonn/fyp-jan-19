@@ -54,9 +54,19 @@ function CertList() {
     }
   };
 
+  // Function to download QR code
+  const downloadQrCode = (qrCodeUrl, studentId) => {
+    const link = document.createElement("a");
+    link.href = qrCodeUrl;
+    link.download = `QRCode-${studentId}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="mx-auto custom-width-70">
-      <div className="cert-list-container ">
+      <div className="cert-list-container">
         <h2 className="text-xl font-semibold text-center mb-4">
           List of Certificates
         </h2>
@@ -75,32 +85,56 @@ function CertList() {
         </ul>
 
         {selectedCertificate && (
-          <div className="certificate-details mt-4 p-4 rounded-lg shadow-md bg-white border-2 border-indigo-800 ">
-            <h3 className="text-lg font-semibold">Certificate Details:</h3>
-            <p>
-              <strong>Type:</strong> {selectedCertificate.certType}
-            </p>
-            <p>
-              <strong>Course Name:</strong> {selectedCertificate.courseName}
-            </p>
-            <p>
-              <strong>Grade:</strong> {selectedCertificate.grade}
-            </p>
-            <p>
-              <strong>Student Name:</strong> {selectedCertificate.studentName}
-            </p>
-            <p>
-              <strong>Student ID:</strong> {selectedCertificate.studentId}
-            </p>
-            <p>
-              <strong>Issued Year:</strong> {selectedCertificate.issueYear}
-            </p>
-            <p>
-              <strong>University Name:</strong> {selectedCertificate.uniName}
-            </p>
+          <div className="certificate-details mt-4 p-4 rounded-lg shadow-md bg-white border-2 border-indigo-800 flex justify-between">
+            <div>
+              <h3 className="text-lg font-semibold">Certificate Details:</h3>
+              <p>
+                <strong>Type:</strong> {selectedCertificate.certType}
+              </p>
+              <p>
+                <strong>Course Name:</strong> {selectedCertificate.courseName}
+              </p>
+              <p>
+                <strong>Grade:</strong> {selectedCertificate.grade}
+              </p>
+              <p>
+                <strong>Student Name:</strong> {selectedCertificate.studentName}
+              </p>
+              <p>
+                <strong>Student ID:</strong> {selectedCertificate.studentId}
+              </p>
+              <p>
+                <strong>Issued Year:</strong> {selectedCertificate.issueYear}
+              </p>
+              <p>
+                <strong>University Name:</strong> {selectedCertificate.uniName}
+              </p>
+            </div>
+            <div>
+              {selectedCertificate.qrCode && (
+                <>
+                  <img
+                    src={selectedCertificate.qrCode}
+                    alt="QR Code"
+                    className="mb-4"
+                  />
+                  <button
+                    onClick={() =>
+                      downloadQrCode(
+                        selectedCertificate.qrCode,
+                        selectedCertificate.studentId
+                      )
+                    }
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Download QR Code
+                  </button>
+                </>
+              )}
+            </div>
             <div className="mt-4 flex justify-start space-x-2">
               <button
-                className="py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700"
+                className="text-sm py-1 px-3 bg-red-600 text-white rounded hover:bg-red-700 transition-colors h-12"
                 onClick={() =>
                   handleDeleteConfirmation(selectedCertificate._id)
                 }
@@ -108,7 +142,7 @@ function CertList() {
                 Delete Certificate
               </button>
               <button
-                className="py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="text-sm py-1 px-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors h-12"
                 onClick={() => setSelectedCertificate(null)}
               >
                 Close
@@ -116,7 +150,7 @@ function CertList() {
             </div>
           </div>
         )}
-      </div>{" "}
+      </div>
     </div>
   );
 }

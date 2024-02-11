@@ -1,41 +1,98 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
-import { QrReader } from "react-qr-reader";
+import { Html5Qrcode } from "html5-qrcode";
+import { useNavigate } from "react-router-dom";
 
-function CertVerify() {
+const CertVerify = () => {
   const [studentId, setStudentId] = useState("");
-  const [qrData, setQrData] = useState(null);
-  const [scanResult, setScanResult] = useState(null);
   const [error, setError] = useState("");
+  const [isScanning, setIsScanning] = useState(false);
+  const scannerRef = useRef(null);
+  const navigate = useNavigate();
 
-  const handleScan = (data) => {
-    if (data) {
-      setQrData(data);
+  // Styles for the placeholder and scanner
+  const placeholderStyle = {
+    width: "250px",
+    height: "250px",
+    margin: "0 auto",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "1px solid #ccc",
+    backgroundColor: "#f8f8f8",
+    color: "#ccc",
+    fontSize: "20px",
+    textAlign: "center",
+    padding: "20px",
+  };
+
+  const startScanner = async () => {
+    setIsScanning(true);
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    try {
+      const html5QrCode = new Html5Qrcode("reader");
+      const cameras = await Html5Qrcode.getCameras();
+      if (cameras.length > 0) {
+        await html5QrCode.start(
+          cameras[0].id,
+          config,
+          (decodedText) => {
+            handleScanSuccess(decodedText, html5QrCode);
+          },
+          handleScanError
+        );
+        scannerRef.current = html5QrCode;
+      } else {
+        setError("No cameras found.");
+        setIsScanning(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Failed to start the scanner.");
+      setIsScanning(false);
     }
   };
 
-  const handleError = (err) => {
-    setError("Error reading the QR Code: " + err);
+  const handleScanSuccess = async (decodedText, scanner) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/certs/verifyCertificate",
+        {
+          certId: decodedText,
+          studentId,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      if (response.data.status === "success") {
+        alert(
+          `Certificate is Genuine ✅:\n\nType: ${response.data.data.certificate.certType}\nCourse Name: ${response.data.data.certificate.courseName}\nGrade: ${response.data.data.certificate.grade}\nStudent Name: ${response.data.data.certificate.studentName}\nStudent ID: ${response.data.data.certificate.studentId}\nIssue Year: ${response.data.data.certificate.issueYear}\nUniversity Name: ${response.data.data.certificate.uniName}`
+        );
+        scanner.stop().finally(() => {
+          setIsScanning(false);
+          navigate("/certverify"); // Adjust the route as needed
+        });
+      }
+    } catch (error) {
+      alert(
+        "Verification failed. Please make sure you are entering the correct Student ID."
+      );
+      scanner.stop().finally(() => {
+        setIsScanning(false);
+      });
+    }
   };
 
-  const handleVerify = async () => {
-    if (qrData && studentId) {
-      try {
-        const response = await axios.post(
-          "http://localhost:3000/api/certs/verifyCertificate",
-          { certId: qrData, studentId },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setScanResult(response.data);
-      } catch (error) {
-        setError("Verification failed. Please try again.");
-      }
-    } else {
-      setError("Please scan a QR code and enter a student ID.");
+  const handleScanError = (error) => {
+    console.error(`Scan Error: ${error}`);
+  };
+
+  const handleVerifyClick = () => {
+    if (!isScanning) {
+      setError("");
+      startScanner();
     }
   };
 
@@ -46,39 +103,34 @@ function CertVerify() {
       </h2>
       <input
         type="text"
-        placeholder="Enter Student ID"
+        placeholder="Enter Student ID & Press Start"
         value={studentId}
         onChange={(e) => setStudentId(e.target.value)}
         className="border p-2 mb-4 w-full"
       />
-      <div
-        className="qr-reader-container mx-auto mb-4"
-        style={{ width: "200px", height: "200px" }}
-      >
-        <QrReader
-          delay={300}
-          onError={handleError}
-          onScan={handleScan}
-          style={{ width: "100%", height: "100%" }}
-          className="qr-reader"
-        />
-      </div>
-      {error && <p className="text-red-500">{error}</p>}
-      <button
-        onClick={handleVerify}
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded my-4"
-      >
-        Verify Certificatee
-      </button>
-
-      {scanResult && (
-        <div className="mt-4">
-          <p className="text-green-500">{scanResult.message}</p>
-          {/* Render additional certificate details here */}
+      {!isScanning && (
+        <div style={placeholderStyle}>
+          <p>Click "Start Scanner" to activate camera</p>
         </div>
       )}
+      <div
+        id="reader"
+        style={{
+          display: isScanning ? "block" : "none",
+          width: "250px",
+          height: "250px",
+          margin: "0 auto",
+        }}
+      ></div>
+      <button
+        onClick={handleVerifyClick}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+      >
+        {isScanning ? "Stop Scanner" : "Start Scanner"}
+      </button>
+      {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
-}
+};
 
 export default CertVerify;

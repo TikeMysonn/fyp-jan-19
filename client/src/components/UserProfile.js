@@ -3,7 +3,7 @@
 import React from "react";
 
 function UserProfile() {
-  return <h1>TESTIS</h1>;
+  return <h1></h1>;
 }
 
 export default UserProfile;

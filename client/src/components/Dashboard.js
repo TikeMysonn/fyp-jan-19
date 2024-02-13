@@ -35,7 +35,7 @@ function Dashboard() {
                     to="/certform"
                     className="px-4 py-2 rounded-md bg-blue-600 text-white order-first"
                   >
-                    Addi Certificate
+                    Add Certificate
                   </Link>
                 )}
                 <Link

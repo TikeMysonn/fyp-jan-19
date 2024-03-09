@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Html5Qrcode } from "html5-qrcode";
 import { useNavigate } from "react-router-dom";
+import UserProfile from "./UserProfile";
 
 const CertVerify = () => {
   const [studentId, setStudentId] = useState("");
@@ -12,8 +13,8 @@ const CertVerify = () => {
 
   // Styles for the placeholder and scanner
   const placeholderStyle = {
-    width: "250px",
-    height: "250px",
+    width: "750px",
+    height: "750px",
     margin: "0 auto",
     display: "flex",
     alignItems: "center",
@@ -97,20 +98,20 @@ const CertVerify = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-6 ">
       <h2 className="text-center text-2xl font-bold mb-4">
         Verify Certificate
       </h2>
       <input
         type="text"
-        placeholder="Enter Student ID & Press Start"
+        placeholder="Step 1: Enter Student ID & Press Start"
         value={studentId}
         onChange={(e) => setStudentId(e.target.value)}
-        className="border p-2 mb-4 w-full"
+        className="border p-4 mb-4 w-full mx-auto"
       />
       {!isScanning && (
         <div style={placeholderStyle}>
-          <p>Click "Start Scanner" to activate camera</p>
+          <p>Step 2: Click "Start Scanner" to activate camera</p>
         </div>
       )}
       <div

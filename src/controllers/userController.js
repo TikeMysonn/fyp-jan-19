@@ -83,3 +83,24 @@ User.prototype.correctPassword = async function (
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
+
+exports.logout = async (req, res) => {
+  try {
+    // Clear the user's authentication token from client-side storage
+    // For example, remove the token from local storage or session storage
+    // Assuming you store the token in local storage
+    localStorage.removeItem("token");
+
+    // Respond with a success message
+    res.status(200).json({
+      status: "success",
+      message: "Logout successful",
+    });
+  } catch (error) {
+    // Handle any errors
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+    });
+  }
+};

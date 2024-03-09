@@ -1,9 +1,11 @@
-//Write my UserProfile.js code to temporarily only show Hello {username}, thank you for using the ECVS. click the Verify Certificate Button to begin verifying certificates
-
 import React from "react";
 
 function UserProfile() {
-  return <h1></h1>;
+  return (
+    <div style={{ border: "1px solid black", padding: "20px" }}>
+      <h1>Hi</h1>
+    </div>
+  );
 }
 
 export default UserProfile;

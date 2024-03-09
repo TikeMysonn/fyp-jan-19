@@ -65,8 +65,8 @@ function CertList() {
   };
 
   return (
-    <div className="mx-auto custom-width-70">
-      <div className="cert-list-container">
+    <div className="mx-auto custom-width-70 mt-8 overflow-hidden">
+      <div className="cert-list-container overflow-y-auto max-h-screen-90 pb-96">
         <h2 className="text-xl font-semibold text-center mb-4">
           List of Certificates
         </h2>

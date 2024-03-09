@@ -7,6 +7,9 @@ const router = express.Router();
 router.post("/register", userController.register);
 router.post("/login", userController.login);
 
+// Logout route
+router.post("/logout", userController.logout);
+
 // Use the authMiddleware to protect routes that require authentication
 router.use(authMiddleware.protect);
 

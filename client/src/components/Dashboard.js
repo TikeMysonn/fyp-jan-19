@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import UserProfile from "./UserProfile";
+import { TERipple } from "tw-elements-react";
 
 function Dashboard() {
   const [userRole, setUserRole] = useState("public");
+  const navbarRef = useRef(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -15,17 +17,32 @@ function Dashboard() {
         console.error("Error parsing user from localStorage:", e);
       }
     }
+
+    // Get the height of the navbar
+    const navbarHeight = navbarRef.current.offsetHeight;
+
+    // Set the top margin of the dashboard
+    document.documentElement.style.setProperty(
+      "--navbar-height",
+      `${navbarHeight}px`
+    );
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto p-6">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div
+          className="grid grid-cols-1 md:grid-cols-12 gap-4"
+          style={{ marginTop: "calc(var(--navbar-height, 0px) - 80px)" }} //adjust how many pixels to minus to give space for navbar
+        >
           <div className="md:col-span-3">
             <UserProfile />
           </div>
           <div className="md:col-span-6">
-            <div className="bg-white shadow overflow-hidden sm:rounded-lg p-6">
+            <div
+              ref={navbarRef}
+              className="bg-white shadow overflow-hidden sm:rounded-lg p-6"
+            >
               <h1 className="text-xl font-semibold text-center mb-6">
                 Education Certificate Verifier System (ECVS)
               </h1>

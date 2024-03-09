@@ -7,6 +7,14 @@ const certRoutes = require("./routes/certRoutes");
 require("dotenv").config();
 
 const app = express();
+
+const bodyParser = require("body-parser"); // Import body-parser
+
+// Increase the maximum header size limit
+app.use(bodyParser.json({ limit: "100mb" }));
+
+// Set maximum allowed size for request headers (in bytes)
+app.set("maxHttpHeaderSize", 81912); // Adjust the value as neededv
 const port = process.env.PORT || 3000;
 
 // Enable CORS for all routes and origins

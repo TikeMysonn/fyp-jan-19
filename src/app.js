@@ -14,7 +14,7 @@ const bodyParser = require("body-parser"); // Import body-parser
 app.use(bodyParser.json({ limit: "100mb" }));
 
 // Set maximum allowed size for request headers (in bytes)
-app.set("maxHttpHeaderSize", 81912); // Adjust the value as neededv
+app.set("maxHttpHeaderSize", 8111912); // Adjust the value as neededv
 const port = process.env.PORT || 3000;
 
 // Enable CORS for all routes and origins

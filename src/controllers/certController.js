@@ -1,6 +1,33 @@
 const Certificate = require("../models/Certificate");
 const QRCode = require("../utils/qrGenerator");
 
+exports.verifyCertificate = async (req, res) => {
+  try {
+    const { certId, studentId } = req.body; // certId as unique identifier from QR code
+
+    const certificate = await Certificate.findOne({ _id: certId, studentId });
+    if (!certificate) {
+      return res.status(404).json({
+        status: "fail",
+        message: "No matching certificate found.",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "The certificate is genuine.",
+      data: {
+        certificate,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
 exports.createCertificate = async (req, res) => {
   try {
     const {
@@ -117,33 +144,6 @@ exports.deleteCertificate = async (req, res) => {
       // Changed from 204 to 200
       status: "success",
       message: "Certificate successfully deleted",
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "error",
-      message: error.message,
-    });
-  }
-};
-
-exports.verifyCertificate = async (req, res) => {
-  try {
-    const { certId, studentId } = req.body; // Assuming certId is extracted from QR code
-
-    const certificate = await Certificate.findOne({ _id: certId, studentId });
-    if (!certificate) {
-      return res.status(404).json({
-        status: "fail",
-        message: "No matching certificate found.",
-      });
-    }
-
-    res.status(200).json({
-      status: "success",
-      message: "The certificate is genuine.",
-      data: {
-        certificate,
-      },
     });
   } catch (error) {
     res.status(400).json({

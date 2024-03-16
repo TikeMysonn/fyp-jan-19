@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Html5Qrcode } from "html5-qrcode";
 import { useNavigate } from "react-router-dom";
-import UserProfile from "./UserProfile";
 
 const CertVerify = () => {
   const [studentId, setStudentId] = useState("");

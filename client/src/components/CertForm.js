@@ -150,7 +150,7 @@ function CertForm() {
             </div>
             <div className="py-2">
               <input
-                type="number"
+                type="text"
                 name="issueYear"
                 placeholder="Issue Year"
                 value={certData.issueYear}

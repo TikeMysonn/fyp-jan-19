@@ -15,23 +15,13 @@
 const mongoose = require("mongoose");
 
 const certificateSchema = new mongoose.Schema({
-  certType: { type: String, minlength: 1, maxlength: 255 }, // Adjusted to accept input between 1 to 255 characters
-  courseName: { type: String, minlength: 1, maxlength: 255 }, // Adjusted to accept input between 1 to 255 characters
-  grade: { type: String, minlength: 1, maxlength: 255 }, // Adjusted to accept input between 1 to 255 characters
-  uniName: { type: String, minlength: 1, maxlength: 255 }, // Adjusted to accept input between 1 to 255 characters
-  studentName: { type: String, minlength: 1, maxlength: 255 }, // Adjusted to accept input between 1 to 255 characters
+  certType: { type: String, minlength: 1, maxlength: 255 },
+  courseName: { type: String, minlength: 1, maxlength: 255 },
+  grade: { type: String, minlength: 1, maxlength: 255 },
+  uniName: { type: String, minlength: 1, maxlength: 255 },
+  studentName: { type: String, minlength: 1, maxlength: 255 },
   studentId: { type: String, unique: true },
-  issueYear: {
-    type: Number,
-    minlength: 4,
-    maxlength: 4,
-    validate: {
-      validator: function (v) {
-        return /^\d{4}$/.test(v); // Regular expression to validate exactly 4 digits
-      },
-      message: (props) => `${props.value} is not a valid 4-digit year!`,
-    },
-  },
+  issueYear: { type: String, minlength: 1, maxlength: 255 },
 });
 
 module.exports = mongoose.model("Certificate", certificateSchema);

@@ -46,7 +46,8 @@ const Navbar = () => {
         </div>
         <div className="text-center text-2xl font-bold">
           <Link to="/dashboard" className="hover:text-gray-300">
-            Education Certificate Verifier System (ECVS)
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ECVS
+            DASHBOARD
           </Link>
         </div>
         <div>
@@ -62,9 +63,9 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <button onClick={handleLogout} className="hover:text-gray-300">
+              {/* <button onClick={handleLogout} className="hover:text-gray-300">
                 Logout
-              </button>
+              </button> */}
             </li>
           </ul>
         </div>

@@ -15,7 +15,7 @@ import CertList from "./components/CertList";
 import CertVerify from "./components/CertVerify";
 import Homepage from "./components/Homepage";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
+import Footer2 from "./components/Footer2";
 import Logout from "./components/Logout";
 
 import "tailwindcss/tailwind.css";
@@ -35,7 +35,7 @@ const App = () => {
         <Route path="/certverify" element={<CertVerify />} />
         <Route path="/homepage" element={<Homepage />} />
         {/* Add route for homepage */}
-        <Route path="/header" element={<Header />} />
+        <Route path="/footer2" element={<Footer2 />} />
       </Routes>
       <Footer />
     </Router>

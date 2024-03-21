@@ -46,25 +46,25 @@ function Dashboard() {
               <h1 className="text-xl font-semibold text-center mb-6">
                 Education Certificate Verifier System (ECVS)
               </h1>
-              <nav className="flex justify-between mb-6">
+              <nav className="flex justify-between mb-6 space-x-2">
                 {userRole === "admin" && (
                   <Link
                     to="/certform"
-                    className="px-4 py-2 rounded-md bg-blue-600 text-white order-first"
+                    className="px-4 py-2 rounded-md bg-gray-600 text-white order-first"
                   >
                     Add Certificate
                   </Link>
                 )}
                 <Link
                   to="/certverify"
-                  className="px-4 py-2 rounded-md bg-blue-600 text-white order-2"
+                  className="px-4 py-2 rounded-md bg-gray-600 text-white order-2"
                 >
                   Verify Certificates
                 </Link>
                 {userRole === "admin" && (
                   <Link
                     to="/certlist"
-                    className="px-4 py-2 rounded-md bg-blue-600 text-white order-last"
+                    className="px-4 py-2 rounded-md bg-gray-600 text-white order-last"
                   >
                     List Certificates
                   </Link>

@@ -32,7 +32,7 @@ function RegisterForm() {
 
       if (response.ok) {
         console.log("Registration successful", data);
-        // Redirect or handle successful registration
+        // Handle successful registration, e.g., redirect to login or dashboard
       } else {
         throw new Error(data.message || "Registration failed");
       }
@@ -42,13 +42,22 @@ function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-6">
-      <div className="max-w-md w-full bg-white p-8 border border-gray-300 rounded-lg shadow-md">
+    <div
+      className="flex items-center justify-center min-h-screen px-6"
+      style={{
+        backgroundImage:
+          'url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90oy1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+        backgroundPosition: "center",
+        backgroundSize: "70%", // Adjust this value as needed
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md border border-gray-300">
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-8">
           Register
         </h2>
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit}>
           <div>
             <label
               htmlFor="username"
@@ -61,12 +70,12 @@ function RegisterForm() {
               name="username"
               id="username"
               required
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               value={formData.username}
               onChange={handleChange}
             />
           </div>
-          <div>
+          <div className="mt-4">
             <label
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
@@ -78,12 +87,12 @@ function RegisterForm() {
               name="password"
               id="password"
               required
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               value={formData.password}
               onChange={handleChange}
             />
           </div>
-          <div>
+          <div className="mt-4">
             <label
               htmlFor="role"
               className="block text-sm font-medium text-gray-700"
@@ -94,7 +103,7 @@ function RegisterForm() {
               name="role"
               id="role"
               required
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               value={formData.role}
               onChange={handleChange}
             >

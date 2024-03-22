@@ -28,7 +28,7 @@ const CertVerify = () => {
 
   const startScanner = async () => {
     setIsScanning(true);
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    const config = { fps: 20, qrbox: { width: 750, height: 750 } };
     try {
       const html5QrCode = new Html5Qrcode("reader");
       const cameras = await Html5Qrcode.getCameras();
@@ -117,8 +117,8 @@ const CertVerify = () => {
         id="reader"
         style={{
           display: isScanning ? "block" : "none",
-          width: "250px",
-          height: "250px",
+          width: "750px",
+          height: "750px",
           margin: "0 auto",
         }}
       ></div>

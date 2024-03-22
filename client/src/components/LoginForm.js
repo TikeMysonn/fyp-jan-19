@@ -36,8 +36,32 @@ function LoginForm() {
     }
   };
 
+  //for background image
+  {
+    /* <div
+className="min-h-screen flex items-center justify-center px-6"
+style={{
+  backgroundImage:
+    'url("https://e0.pxfuel.com/wallpapers/1017/65/desktop-wallpaper-accomplishment-ceremony-college-education-friends-graduation-group-hats-people-school-student-students-success-together-university-college-student.jpg")',
+  backgroundPosition: "center",
+  backgroundSize: "70%", // Adjust this value as needed
+  backgroundRepeat: "no-repeat",
+}}
+> */
+  }
+
+  //https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-6">
+    <div
+      className="min-h-screen flex items-center justify-center px-6"
+      style={{
+        backgroundImage:
+          'url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+        backgroundPosition: "center",
+        backgroundSize: "70%", // Adjust this value as needed
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="max-w-md w-full bg-white p-8 border border-gray-300 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-8">
           Login
@@ -80,7 +104,7 @@ function LoginForm() {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Log In
           </button>

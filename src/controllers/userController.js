@@ -71,9 +71,16 @@ exports.register = async (req, res) => {
       role: role || "public",
     });
     const token = generateToken(user._id);
+
+    // Adding alert message for successful registration
+    const alertMessage = `Congrats, you have successfully registered an ${
+      user.role === "admin" ? "admin" : "public"
+    } account`;
+
     res.status(201).json({
       status: "success",
       token,
+      alertMessage, // include the alert message in the response
       data: { id: user._id, username: user.username, role: user.role },
     });
   } catch (error) {
@@ -83,6 +90,7 @@ exports.register = async (req, res) => {
     });
   }
 };
+
 exports.logout = async (req, res) => {
   try {
     // Clear the user's authentication token from client-side storage

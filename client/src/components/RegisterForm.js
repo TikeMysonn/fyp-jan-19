@@ -7,6 +7,7 @@ function RegisterForm() {
     role: "public", // Default role
   });
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(""); // Added state for success message
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,6 +20,7 @@ function RegisterForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess(""); // Reset success message on new submission
 
     try {
       const response = await fetch("http://localhost:3000/api/users/register", {
@@ -32,7 +34,7 @@ function RegisterForm() {
 
       if (response.ok) {
         console.log("Registration successful", data);
-        // Handle successful registration, e.g., redirect to login or dashboard
+        setSuccess("Registration successful! You can now log in.");
       } else {
         throw new Error(data.message || "Registration failed");
       }
@@ -48,7 +50,7 @@ function RegisterForm() {
         backgroundImage:
           'url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90oy1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
         backgroundPosition: "center",
-        backgroundSize: "70%", // Adjust this value as needed
+        backgroundSize: "70%",
         backgroundRepeat: "no-repeat",
       }}
     >
@@ -57,6 +59,9 @@ function RegisterForm() {
           Register
         </h2>
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        {success && (
+          <p className="text-green-500 text-sm text-center">{success}</p>
+        )}
         <form onSubmit={handleSubmit}>
           <div>
             <label

@@ -72,7 +72,7 @@ const CertVerify = () => {
         );
         scanner.stop().finally(() => {
           setIsScanning(false);
-          navigate("/certverify"); // Adjust the route as needed
+          navigate("/dashboard"); // Adjust the route as needed
         });
       }
     } catch (error) {
